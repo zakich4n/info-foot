@@ -8,33 +8,34 @@ import {
   Code,
   Grid,
   theme,
+  Input,
+  Flex,
+  Heading
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { Logo } from './Logo';
 
+function fetchInfo() {
+  
+}
+
+
 function App() {
+  function PasswordInput() {
+    const [show, setShow] = React.useState(false)
+    const handleClick = () => setShow(!show)
+  }
   return (
-    <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
+    <ChakraProvider theme={theme} >
+      <Flex alignItems='center' justifyContent='center' height='60vh' bgGradient='linear(to-r, #3a0ca3, #b5179e)'>
+        <Box border="4px" borderRadius="md" borderColor="gray.200"  _hover={{bgGradient: 'linear(to-r, red.500, yellow.500)',}} >
+            <Heading padding={4} color='white' >Log in</Heading>
+            <Input placeholder='Email' variant='outline' bg='white' borderColor='#9FA0FF' />
+          </Box>
+
+      
+      </Flex>
+    
     </ChakraProvider>
   );
 }

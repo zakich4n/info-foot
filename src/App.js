@@ -10,32 +10,21 @@ import {
   theme,
   Input,
   Flex,
-  Heading
+  Heading,
+  SimpleGrid,
+  Button
 } from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
-
-function fetchInfo() {
-  
-}
+import Header from './components/header.jsx';
+import FootballClub from './components/football_club.jsx';
 
 
 function App() {
-  function PasswordInput() {
-    const [show, setShow] = React.useState(false)
-    const handleClick = () => setShow(!show)
-  }
   return (
     <ChakraProvider theme={theme} >
-      <Flex alignItems='center' justifyContent='center' height='60vh' bgGradient='linear(to-r, #3a0ca3, #b5179e)'>
-        <Box border="4px" borderRadius="md" borderColor="gray.200"  _hover={{bgGradient: 'linear(to-r, red.500, yellow.500)',}} >
-            <Heading padding={4} color='white' >Log in</Heading>
-            <Input placeholder='Email' variant='outline' bg='white' borderColor='#9FA0FF' />
-          </Box>
-
-      
+      <Header/>
+      <Flex>
+        <FootballClub/>
       </Flex>
-    
     </ChakraProvider>
   );
 }

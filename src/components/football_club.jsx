@@ -13,19 +13,18 @@ import {
 import React, {Component} from 'react';
 import { useState } from 'react';
 import axios from 'axios';
-
-const options = {
-    method: 'GET',
-    url: 'https://api-football-v1.p.rapidapi.com/v3/teams',
-    params: {id: '33'},
-    headers: {
-      'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
-      'X-RapidAPI-Key': '91eeb26ed8msh8447d341df76518p1a7653jsna3db505351af'
-    }
-  };
   
 
 class FootballClub extends Component {
+    options = {
+        method: 'GET',
+        url: 'https://api-football-v1.p.rapidapi.com/v3/teams',
+        params: {id: this.props.club_id},
+        headers: {
+        'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
+        'X-RapidAPI-Key': '91eeb26ed8msh8447d341df76518p1a7653jsna3db505351af'
+        }
+    }
     constructor(props) {
         super(props);
         this.state = {
@@ -36,12 +35,12 @@ class FootballClub extends Component {
     }
 
     componentDidMount(){
-        axios.request(options).then((response) => {
+        axios.request(this.options).then((response) => {
             this.setState({
                 team:response.data,
                 error: false
             })
-            console.log(response.status);
+            console.log(this.props);
         }
         ).catch(function (error) {
             this.error=true;

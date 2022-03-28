@@ -1,25 +1,13 @@
 import React from 'react';
 import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-  Input,
-  Flex,
-  Heading,
-  SimpleGrid,
-  Button
+  ChakraProvider, SimpleGrid,
+  
 } from '@chakra-ui/react';
 import Header from './components/header.jsx';
 import FootballClub from './components/football_club.jsx';
 import League from './components/league.jsx';
 
-function App() {
-  state = {
+const state = {
     // 39 Premier League | 180 Championship
     // 61 Ligue 1 | 62 Ligue 2
     // 140 La Liga
@@ -29,17 +17,24 @@ function App() {
     // 197 Super League
     // 203 Toto Super Lig
     // 88 Euredivise
-    leagues : [39, 180, 61, 62, 140, 135, 78, 79, 144, 197, 203, 88]
+    leaguesID : [39, 180, 61, 62, 140, 135, 78, 79, 144, 197, 203, 88]
   };
+
+
+function App() {
+  
   return (
-    <ChakraProvider theme={theme} >
+    <ChakraProvider>
       <Header/>
-      <Flex>
+      <SimpleGrid spacing='40px'>
         {
         //<FootballClub club_id={'33'} selected={true} />
+        //state.leaguesID.map(league => (
+         // <League key={league} leagueID={league} selected={true} />
+        //))
         }
-        <League/>
-      </Flex>
+        
+      </SimpleGrid>
     </ChakraProvider>
   );
 }

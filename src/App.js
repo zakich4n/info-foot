@@ -8,7 +8,7 @@ import FootballClub from './components/football_club.jsx';
 import League from './components/league.jsx';
 
 const state = {
-    // 39 Premier League | 180 Championship
+    // 39 Premier League | 40 Championship
     // 61 Ligue 1 | 62 Ligue 2
     // 140 La Liga
     //135 Serie A
@@ -17,7 +17,7 @@ const state = {
     // 197 Super League
     // 203 Toto Super Lig
     // 88 Euredivise
-    leaguesID : [39, 180, 61, 62, 140, 135, 78, 79, 144, 197, 203, 88]
+    leaguesID : [39, 40, 61, 62, 140, 135, 78, 79, 144, 197, 203, 88]
   };
 
 

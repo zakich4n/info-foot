@@ -83,7 +83,7 @@ const Header =() =>  {
 
           <DrawerBody>
             {state.Leagues.map(league => (
-                    <Flex alignItems="center" pr="10">
+                    <Flex alignItems="center" pr="10" key={league['id']}>
                         <Link onClick={onClose} to={"/league?id="+league['id']} size='sm'>
                             <Box borderRadius='lg'  margin='6px' p="10px" bg='teal.100' maxW='sm' display='flex' alignItems='baseline'>
                                 <Center>

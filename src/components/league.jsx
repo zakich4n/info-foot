@@ -40,6 +40,7 @@ function League ({league_id}) {
     /*options = {
         method: 'GET',
         url: 'https://api-football-v1.p.rapidapi.com/v3/leagues',
+        
         params: {
             //season : 2022,
             //search : 'turkey'
@@ -50,6 +51,8 @@ function League ({league_id}) {
         'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
         'X-RapidAPI-Key': '91eeb26ed8msh8447d341df76518p1a7653jsna3db505351af'
         }
+        X-RapidAPI-Host: api-football-v1.p.rapidapi.com
+        X-RapidAPI-Key: 91eeb26ed8msh8447d341df76518p1a7653jsna3db505351af
     }*/
 
 

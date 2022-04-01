@@ -1,206 +1,128 @@
 import {
-    Heading,
-    Avatar,
-    Box,
-    Center,
-    Image,
-    Flex,
-    Text,
-    Stack,
-    Button,
-    useColorModeValue,
-  } from '@chakra-ui/react';
-import React, {Component} from 'react';
+  Heading,
+  Avatar,
+  Box,
+  Center,
+  Image,
+  Flex,
+  Text,
+  Stack,
+  Button,
+  useColorModeValue,
+  Spinner
+} from '@chakra-ui/react';
+import React, {useEffect} from 'react';
 import { useState } from 'react';
 import axios from 'axios';
-  
 
-class FootballClub extends Component {
-    options = {
-        method: 'GET',
-        url: 'https://api-football-v1.p.rapidapi.com/v3/teams',
-        params: {id: this.props.club_id},
-        headers: {
-        'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
-        'X-RapidAPI-Key': '91eeb26ed8msh8447d341df76518p1a7653jsna3db505351af'
-        }
-    }
-    constructor(props) {
-        super(props);
-        this.state = {
-          error: null,
-          isLoaded: false,
-          team: {}
-        };
-    }
 
-    componentDidMount(){
-        axios.request(this.options).then((response) => {
-            this.setState({
-                team:response.data,
-                error: false
-            })
-            console.log(this.props);
-        }
-        ).catch(function (error) {
-            this.error=true;
-            console.error(error);
-        });
-    }
-    
-    
-    render() {
-        const {team} = this.state;
-        console.log(typeof team['response'] === 'undefined' ? "No data yet..." : team);
+const FootballClub = (props) => {
+  const [isStatsLoading, setStatsLoading] = useState(true);
 
-        //still loading
-        if (typeof team['response'] === 'undefined') {
-            return (
-                <Center py={6}>
-                    <Box
-                        maxW={'270px'}
-                        w={'full'}
-                        bg='gray.800'
-                        boxShadow={'2xl'}
-                        rounded={'md'}
-                        overflow={'hidden'}>
-                        <Image
-                        h={'120px'}
-                        w={'full'}
-                        src={
-                            null
-                        }
-                        objectFit={'cover'}
-                        />
-                        <Flex justify={'center'} mt={-12}>
-                        <Avatar
-                            size={'xl'}
-                            src={
-                                null
-                            }
-                            alt={'Author'}
-                            css={{
-                            border: '2px solid white',
-                            }}
-                        />
-                        </Flex>
-                
-                        <Box p={6}>
-                        <Stack spacing={0} align={'center'} mb={5}>
-                            <Heading fontSize={'2xl'} fontWeight={500} fontFamily={'body'}>
-                            John Doe
-                            </Heading>
-                            <Text color={'gray.500'}>{null}</Text>
-                        </Stack>
-                
-                        <Stack direction={'row'} justify={'center'} spacing={6}>
-                            <Stack spacing={0} align={'center'}>
-                            <Text fontWeight={600}>23k</Text>
-                            <Text fontSize={'sm'} color={'gray.500'}>
-                                Followers
-                            </Text>
-                            </Stack>
-                            <Stack spacing={0} align={'center'}>
-                            <Text fontWeight={600}>23k</Text>
-                            <Text fontSize={'sm'} color={'gray.500'}>
-                                Followers
-                            </Text>
-                            </Stack>
-                        </Stack>
-                
-                        <Button
-                            w={'full'}
-                            mt={8}
-                            bg='gray.900'
-                            color={'white'}
-                            rounded={'md'}
-                            _hover={{
-                            transform: 'translateY(-2px)',
-                            boxShadow: 'lg',
-                            }}>
-                            Follow
-                        </Button>
-                        </Box>
-                    </Box>
-                </Center>
-            );
-        }
+  const [data, setData] = useState();
 
-        //done loading 
-        else {
-            return (
-                <Center py={6}>
-          <Box
-            maxW={'270px'}
+  const fetchTeamStats = {
+      method: 'GET',
+      url: 'https://api-football-v1.p.rapidapi.com/v3/teams/statistics',
+      params: {
+          league: props.league_id,
+          season: 2021,
+          team: props.team_id
+      },
+      headers: {
+      'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
+      'X-RapidAPI-Key': '91eeb26ed8msh8447d341df76518p1a7653jsna3db505351af'
+      }
+  }
+
+  useEffect(() => {
+      axios.request(fetchTeamStats).then(response => {
+          setData(response.data);
+          setStatsLoading(false);
+      }
+      ).catch(function (error) {
+          console.error(error);
+      });
+  }, []);
+
+  if(isStatsLoading) {
+      return <Center><Spinner size='xl'/></Center>
+  }
+  console.log(data);
+  let arr=[];
+          Object.entries(data['response']['goals']['against']['minute']).slice(0,3).map(time => arr.push(Object.entries(time)[1][1]['total']))
+          let firstHalfAgainst=arr.reduce((previousValue, currentValue) => previousValue + currentValue,0);
+          arr=[];
+          Object.entries(data['response']['goals']['against']['minute']).slice(3,6).map(time => arr.push(Object.entries(time)[1][1]['total']))
+          let secondHalfAgainst=arr.reduce((previousValue, currentValue) => previousValue + currentValue,0);
+
+
+          arr=[];
+          Object.entries(data['response']['goals']['for']['minute']).slice(0,3).map(time => arr.push(Object.entries(time)[1][1]['total']))
+          let firstHalfFor=arr.reduce((previousValue, currentValue) => previousValue + currentValue,0);
+          arr=[];
+          Object.entries(data['response']['goals']['for']['minute']).slice(3,6).map(time => arr.push(Object.entries(time)[1][1]['total']))
+          let secondHalfFor=arr.reduce((previousValue, currentValue) => previousValue + currentValue,0);
+          
+
+  return (
+      <Center >
+        <Box
+          w={'full'}
+          rounded={'md'}
+          overflow={'hidden'}>
+          <Image
+            h={'120px'}
             w={'full'}
-            bg='gray.800'
-            boxShadow={'2xl'}
-            rounded={'md'}
-            overflow={'hidden'}>
-            <Image
-              h={'120px'}
-              w={'full'}
+            bg={'black'}
+            objectFit={'cover'}
+          />
+          <Flex justify={'center'} mt={-12}>
+            <Avatar
+              size={'xl'}
               src={
-                team['response'][0]['venue']['image']
+                  data['response']['team']['logo']
               }
-              objectFit={'cover'}
+              alt={data['response']['team']['name']}
+              css={{
+                border: '2px solid white',
+              }}
             />
-            <Flex justify={'center'} mt={-12}>
-              <Avatar
-                size={'xl'}
-                src={
-                    team['response'][0]['team']['logo']
-                }
-                alt={'Author'}
-                css={{
-                  border: '2px solid white',
-                }}
-              />
-            </Flex>
-    
-            <Box p={6}>
-              <Stack spacing={0} align={'center'} mb={5}>
-                <Heading fontSize={'2xl'} fontWeight={500} fontFamily={'body'} color={'white'}>
-                  {team['response'][0]['team']['name']}
-                </Heading>
-                <Text color={'gray.500'}>{team['response'][0]['venue']['name']}</Text>
+          </Flex>
+  
+          <Box p={6}>
+            <Stack spacing={0} align={'center'} >
+              <Heading fontSize={'2xl'} fontWeight={500} fontFamily={'body'} >
+                {data['response']['team']['name']}
+              </Heading>
+              <Text color={'gray.500'}>{'Saison : '+data['response']['league']['season']}</Text>
+            </Stack>
+            <Stack direction={'row'} justify={'center'} spacing={6}>
+            <Stack spacing={0} align={'center'}>
+                <Text fontWeight={600} >Buts</Text>
+                <Text  fontWeight={500} color={'gray.600'}>
+                  1er mi-Temps : {firstHalfAgainst}
+                  <br/>
+                  2nd mi-Temps : {secondHalfAgainst}
+                </Text>
               </Stack>
-    
-              <Stack direction={'row'} justify={'center'} spacing={6}>
-                <Stack spacing={0} align={'center'}>
-                  <Text fontWeight={600} color={'white'}>23k</Text>
-                  <Text fontSize={'sm'} color={'gray.500'}>
-                    Followers
-                  </Text>
-                </Stack>
-                <Stack spacing={0} align={'center'}>
-                  <Text fontWeight={600} color={'white'}>23k</Text>
-                  <Text fontSize={'sm'} color={'gray.500'}>
-                    Followers
-                  </Text>
-                </Stack>
+              <Stack spacing={0} align={'center'}>
+                <Text fontWeight={600} >Buts encaissés</Text>
+                <Text  fontWeight={500} color={'gray.600'}>
+                  1er mi-Temps : {firstHalfFor}
+                  <br/>
+                  2nd mi-Temps : {secondHalfFor}
+                </Text>
               </Stack>
-    
-              <Button
-                w={'full'}
-                mt={8}
-                bg='gray.900'
-                color={'white'}
-                rounded={'md'}
-                _hover={{
-                  transform: 'translateY(-2px)',
-                  boxShadow: 'lg',
-                }}>
-                Follow
-              </Button>
-            </Box>
+            </Stack>
+            
           </Box>
-        </Center>
-            );
-        }
+        </Box>
+      </Center>
+  );
 
-        
-    }
+      
+  
 }
 
 export default FootballClub;

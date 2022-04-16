@@ -17,8 +17,9 @@ import FootballClub from './components/football_club.jsx';
 import { useEffect } from 'react';
 import axios from 'axios';
 import {
-  BrowserRouter as Router,
   Switch,
+  BrowserRouter as Router,
+  Routes,
   Route,
   Link,
   useParams,

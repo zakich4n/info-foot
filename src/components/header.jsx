@@ -68,7 +68,7 @@ const Header =() =>  {
             <ChakraProvider theme={theme} >
                 <>
       <Button ref={btnRef} colorScheme='teal' onClick={onOpen}>
-        Select League
+        Choisir le Championnat
       </Button>
       <Drawer
         isOpen={isOpen}

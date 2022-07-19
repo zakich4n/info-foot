@@ -80,7 +80,7 @@ function League ({league_id}) {
       url: 'https://api-football-v1.p.rapidapi.com/v3/standings',
       params: {
           league: league_id,
-          season: 2021
+          season: 2022
       },
       headers: {
       'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',

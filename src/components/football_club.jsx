@@ -27,7 +27,7 @@ const FootballClub = (props) => {
       params: {
           league: props.league_id,
           season: 2021,
-          team: props.club_id
+          team: props.team_id
       },
       headers: {
       'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
@@ -74,9 +74,7 @@ const FootballClub = (props) => {
           <Image
             h={'120px'}
             w={'full'}
-            src={
-              'https://media.api-sports.io/football/leagues/'+data['response']['team']['id']+'.png'
-            }
+            bg={'black'}
             objectFit={'cover'}
           />
           <Flex justify={'center'} mt={-12}>
@@ -120,7 +118,7 @@ const FootballClub = (props) => {
             
           </Box>
         </Box>
-              </Center>
+      </Center>
   );
 
       
